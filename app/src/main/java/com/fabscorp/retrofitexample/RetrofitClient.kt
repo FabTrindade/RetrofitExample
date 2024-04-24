@@ -15,13 +15,17 @@ class RetrofitClient {
         private fun getRetrofitInstance(): Retrofit {
             val http = OkHttpClient.Builder()
             if (!::INSTANCE.isInitialized) {
-                Retrofit.Builder()
+                INSTANCE = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(http.build())
                     .addConverterFactory(GsonConverterFactory.create())//Json <-> Kotlin Interface
                     .build()
             }
             return INSTANCE
+        }
+
+        fun createPostsService(): PostsService{
+            return getRetrofitInstance().create(PostsService::class.java)
         }
     }
 }

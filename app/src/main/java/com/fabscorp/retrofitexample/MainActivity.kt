@@ -11,36 +11,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.fabscorp.retrofitexample.ui.theme.RetrofitExampleTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            RetrofitExampleTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+        setContentView(R.layout.activity_main)
+
+        val service = RetrofitClient.createPostsService()
+        val call: Call<List<PostsEntity>> = service.list()
+        call.enqueue(object : Callback<List<PostsEntity>> { // To put it in the queue
+            override fun onResponse(call: Call<List<PostsEntity>>, r: Response<List<PostsEntity>>) {
+                val s = ""
             }
-        }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+            override fun onFailure(call: Call<List<PostsEntity>>, t: Throwable) {
+                val s = ""
+            }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RetrofitExampleTheme {
-        Greeting("Android")
+        })
     }
 }
