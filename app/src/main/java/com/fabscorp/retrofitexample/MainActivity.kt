@@ -20,9 +20,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val service = RetrofitClient.createPostsService()
+        val service = RetrofitClient.createService(PostsService::class.java)
         val call: Call<List<PostsEntity>> = service.list()
-        call.enqueue(object : Callback<List<PostsEntity>> { // To put it in the queue
+        call.enqueue(object : Callback<List<PostsEntity>> { // To put it in the queue. Asyc call
             override fun onResponse(call: Call<List<PostsEntity>>, r: Response<List<PostsEntity>>) {
                 val s = ""
             }

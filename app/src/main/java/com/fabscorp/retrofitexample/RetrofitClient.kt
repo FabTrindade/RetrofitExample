@@ -24,8 +24,8 @@ class RetrofitClient {
             return INSTANCE
         }
 
-        fun createPostsService(): PostsService{
-            return getRetrofitInstance().create(PostsService::class.java)
+        fun <S> createService(c : Class<S>): S {
+            return getRetrofitInstance().create(c)
         }
     }
 }
